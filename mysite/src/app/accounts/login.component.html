@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<div class="wrapper">
+<form #f="ngForm" (ngSubmit)="onSubmit()" style="padding-left:500px">
+  <br>
+  <div *ngIf="this.AccountsService.non_field_errors"
+       class="alert alert-danger" style="width:400px">
+
+  Invalid Username or Password
+
+  </div>
+<div class="form-group">
+  <label for="username">Username</label>
+  <input type="text" class="form-control" id="username"
+         required
+         [(ngModel)]="model.username" name="username" style="width:400px">
+</div>
+
+<div class="form-group">
+  <label for="password">Password</label>
+  <input type="password" class="form-control" id="password"
+         required
+         [(ngModel)]="model.password" name="password" style="width:400px">
+</div>
+<button type="submit" class="btn btn-primary align" [disabled]="f.invalid" >Login</button>
+</form>
+</div>
+<script type="text/javascript">
+  .align {
+    position: absolute;
+    top: 50%;
+}
+.wrapper {
+    text-align: center;
+}
+</script>

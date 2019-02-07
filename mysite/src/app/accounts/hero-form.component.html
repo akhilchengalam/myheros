@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<form #f="ngForm" (ngSubmit)="onSubmit()" style="padding-left:500px">
+<!-- <div class="form-group">
+  <label for="firstname">First Name</label>
+  <input type="text" class="form-control" id="first_name"
+         required
+         [(ngModel)]="model.first_name" name="first_name">
+</div>
+<div class="form-group">
+  <label for="Last Name">Last Name</label>
+  <input type="text" class="form-control" id="last_name"
+         required
+         [(ngModel)]="model.last_name" name="last_name">
+</div> -->
+<br>
+<div *ngIf="this.AccountsService.SignUperrors"
+     class="alert alert-danger" style="width:400px">
+     <div *ngIf="this.AccountsService.emailerrors">
+     A user is already registered with this e-mail address.
+      </div>
+      <div *ngIf="this.AccountsService.usernameerrors">
+      A user with that username already exists.
+    </div>
+</div>
+<div class="form-group">
+  <label for="email">Email</label>
+  <input type="email" class="form-control" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel"
+         required
+         [(ngModel)]="model.email" name="email" style="width:400px">
+            <br>
+         <div *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.pattern"
+              class="alert alert-danger" style="width:400px">
+
+           <div *ngIf="email.errors.pattern">
+             Enter a valid Email address
+           </div>
+           <div *ngIf="email.errors.required">
+             Email is required.
+           </div>
+
+         </div>
+</div>
+
+<div class="form-group">
+  <label for="username">Username</label>
+  <input type="text" class="form-control" id="username"
+         required
+         [(ngModel)]="model.username" name="username" #name="ngModel" minlength=4 style="width:400px">
+         <br>
+         <div *ngIf="name.invalid && (name.dirty || name.touched)"
+              class="alert alert-danger" style="width:400px">
+
+           <div *ngIf="name.errors.required">
+             Username is required.
+           </div>
+           <div *ngIf="name.errors.minlength">
+             Username must be at least 4 characters long.
+           </div>
+
+         </div>
+
+</div>
+<div class="form-group">
+  <label for="password1">Password</label>
+  <input type="password" class="form-control" id="password1" pattern="^(?=\D*\d)(?=.*?[a-zA-Z])(?=[\w!$(),.:;?@{}\[\]^-]{8,}$)((.)\2?(?!\2))+$"
+         required
+         [(ngModel)]="model.password1" name="password1" #password="ngModel" minlength=8 style="width:400px" >
+            <br>
+         <div *ngIf="password.invalid && (password.dirty && password.touched)"
+              class="alert alert-danger" style="width:400px">
+
+           <div *ngIf="password.errors.required">
+             Password is required.
+           </div>
+           <div *ngIf="password.errors.minlength">
+             Password must be 8 characters long, we need another {{password.errors.minlength.requiredLength - password.errors.minlength.actualLength}} characters
+           </div>
+           <div *ngIf="password.errors.pattern">
+             Password should contain atleat one letter and one digit.
+           </div>
+
+         </div>
+
+</div>
+<div class="form-group">
+  <label for="password2"> Confirm Password</label>
+        <input type="Password" class="form-control" id="password2" required minlength="8"
+            [(ngModel)] ="model.password2" name="password2" #password2="ngModel" style="width:400px">
+            <br>
+        <div *ngIf=" ((password2.touched) && (password.value!=password2.value)) "
+             class="alert alert-danger" style="width:400px">
+              Password doesnot match
+        </div>
+</div>
+<button type="submit" class="btn btn-primary" [disabled]="f.invalid" [disabled]="password.value!=password2.value" >SignUp</button>
+</form>
